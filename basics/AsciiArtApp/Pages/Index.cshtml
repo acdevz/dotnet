@@ -1,0 +1,111 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<style>
+    body {
+        background: #fafafa;
+        color: #222;
+    }
+
+    .artify {
+        max-width: 900px;
+        margin: 90px auto;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    .artify h1 {
+        font-size: 42px;
+        margin-bottom: 60px;
+        font-weight: 100;
+        letter-spacing: -1px;
+    }
+
+    .artify-form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        margin-bottom: 50px;
+    }
+
+    .artify-input {
+        width: 400px;
+        padding: 10px 2px;
+        border: none;
+        border-bottom: 2px solid #333;
+        background: transparent;
+        font-size: 18px;
+        outline: none;
+        color: #222;
+    }
+
+    .artify-input::placeholder {
+        color: #999;
+    }
+
+    .artify-input:focus {
+        border-bottom-color: #060606;
+    }
+
+    .font-select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background: white;
+        font-size: 15px;
+    }
+
+    .submit {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 6px;
+        background: #222;
+        color: white;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.15s, transform 0.1s;
+    }
+
+    .submit:hover {
+        background: #444;
+    }
+
+    .submit:active {
+        transform: scale(0.94);
+    }
+
+    .ascii-output {
+        color: #111;
+        font-size: 18px;
+        line-height: 1.2;
+        font-weight: 500;
+        overflow-x: auto;
+    }
+</style>
+
+<div class="artify">
+    <h1>Ascii Art</h1>
+
+    <form method="post" class="artify-form">
+        <input type="text" name="text" id="text" class="artify-input" placeholder="type something..." />
+
+        <select name="fontName" class="font-select">
+            @foreach (var font in Model.Fonts)
+            {
+                <option value="@font.Name">@font.Name</option>
+            }
+        </select>
+
+        <input type="submit" value="Artify" class="submit" />
+    </form>
+    <div>
+        @if (Model.ShowRenderedText)
+        {
+            <pre class="ascii-output">@Model.RenderedText</pre>
+        }
+    </div>
+</div>
