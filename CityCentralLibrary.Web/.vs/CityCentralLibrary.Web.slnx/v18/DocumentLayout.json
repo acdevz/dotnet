@@ -1,0 +1,87 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\aman.a.chandra\\OneDrive - Accenture\\Documents\\__codes__\\CityCentralLibrary.Web\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{652B652B-5EC8-4336-D5C1-BB84F17FC892}|CityCentralLibrary.Web\\CityCentralLibrary.Web.csproj|c:\\users\\aman.a.chandra\\onedrive - accenture\\documents\\__codes__\\citycentrallibrary.web\\citycentrallibrary.web\\controllers\\membershipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{652B652B-5EC8-4336-D5C1-BB84F17FC892}|CityCentralLibrary.Web\\CityCentralLibrary.Web.csproj|solutionrelative:citycentrallibrary.web\\controllers\\membershipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{652B652B-5EC8-4336-D5C1-BB84F17FC892}|CityCentralLibrary.Web\\CityCentralLibrary.Web.csproj|c:\\users\\aman.a.chandra\\onedrive - accenture\\documents\\__codes__\\citycentrallibrary.web\\citycentrallibrary.web\\citycentrallibrary.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{652B652B-5EC8-4336-D5C1-BB84F17FC892}|CityCentralLibrary.Web\\CityCentralLibrary.Web.csproj|solutionrelative:citycentrallibrary.web\\citycentrallibrary.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B0E577EF-7401-60E3-5062-E60E4AB95704}|CityCentralLibrary.DAL\\CityCentralLibrary.DAL.csproj|c:\\users\\aman.a.chandra\\onedrive - accenture\\documents\\__codes__\\citycentrallibrary.web\\citycentrallibrary.dal\\repositories\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B0E577EF-7401-60E3-5062-E60E4AB95704}|CityCentralLibrary.DAL\\CityCentralLibrary.DAL.csproj|solutionrelative:citycentrallibrary.dal\\repositories\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B0E577EF-7401-60E3-5062-E60E4AB95704}|CityCentralLibrary.DAL\\CityCentralLibrary.DAL.csproj|c:\\users\\aman.a.chandra\\onedrive - accenture\\documents\\__codes__\\citycentrallibrary.web\\citycentrallibrary.dal\\data\\memberinfodbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B0E577EF-7401-60E3-5062-E60E4AB95704}|CityCentralLibrary.DAL\\CityCentralLibrary.DAL.csproj|solutionrelative:citycentrallibrary.dal\\data\\memberinfodbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MembershipController.cs",
+              "DocumentMoniker": "C:\\Users\\aman.a.chandra\\OneDrive - Accenture\\Documents\\__codes__\\CityCentralLibrary.Web\\CityCentralLibrary.Web\\Controllers\\MembershipController.cs",
+              "RelativeDocumentMoniker": "CityCentralLibrary.Web\\Controllers\\MembershipController.cs",
+              "ToolTip": "C:\\Users\\aman.a.chandra\\OneDrive - Accenture\\Documents\\__codes__\\CityCentralLibrary.Web\\CityCentralLibrary.Web\\Controllers\\MembershipController.cs",
+              "RelativeToolTip": "CityCentralLibrary.Web\\Controllers\\MembershipController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-10T10:56:07.706Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CityCentralLibrary.Web",
+              "DocumentMoniker": "C:\\Users\\aman.a.chandra\\OneDrive - Accenture\\Documents\\__codes__\\CityCentralLibrary.Web\\CityCentralLibrary.Web\\CityCentralLibrary.Web.csproj",
+              "RelativeDocumentMoniker": "CityCentralLibrary.Web\\CityCentralLibrary.Web.csproj",
+              "ToolTip": "C:\\Users\\aman.a.chandra\\OneDrive - Accenture\\Documents\\__codes__\\CityCentralLibrary.Web\\CityCentralLibrary.Web\\CityCentralLibrary.Web.csproj",
+              "RelativeToolTip": "CityCentralLibrary.Web\\CityCentralLibrary.Web.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-09-10T10:41:14.136Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Users\\aman.a.chandra\\OneDrive - Accenture\\Documents\\__codes__\\CityCentralLibrary.Web\\CityCentralLibrary.DAL\\Repositories\\Repository.cs",
+              "RelativeDocumentMoniker": "CityCentralLibrary.DAL\\Repositories\\Repository.cs",
+              "ToolTip": "C:\\Users\\aman.a.chandra\\OneDrive - Accenture\\Documents\\__codes__\\CityCentralLibrary.Web\\CityCentralLibrary.DAL\\Repositories\\Repository.cs",
+              "RelativeToolTip": "CityCentralLibrary.DAL\\Repositories\\Repository.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAxwBsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-10T10:11:58.82Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MemberInfoDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\aman.a.chandra\\OneDrive - Accenture\\Documents\\__codes__\\CityCentralLibrary.Web\\CityCentralLibrary.DAL\\Data\\MemberInfoDbContext.cs",
+              "RelativeDocumentMoniker": "CityCentralLibrary.DAL\\Data\\MemberInfoDbContext.cs",
+              "ToolTip": "C:\\Users\\aman.a.chandra\\OneDrive - Accenture\\Documents\\__codes__\\CityCentralLibrary.Web\\CityCentralLibrary.DAL\\Data\\MemberInfoDbContext.cs",
+              "RelativeToolTip": "CityCentralLibrary.DAL\\Data\\MemberInfoDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAD8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-10T10:02:24.782Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

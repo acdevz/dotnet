@@ -1,0 +1,386 @@
+@model OrderApp.Models.Orders.OrderTrackViewModel
+
+@{
+    ViewData["Title"] = $"Order #{Model.OrderId}";
+}
+
+<div class="mb-4">
+    <a asp-action="Index" class="text-decoration-none">
+        ← Back to orders
+    </a>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white
+                d-flex justify-content-between
+                align-items-center py-3">
+
+                <div>
+                    <h1 class="h3 mb-1">
+                        Order #@Model.OrderId
+                    </h1>
+
+                    <div class="text-muted">
+                        @Model.CustomerName
+                    </div>
+                </div>
+
+                <span id="connectionBadge" class="badge text-bg-secondary">
+                    Connecting
+                </span>
+            </div>
+
+            <div class="card-body">
+                <div id="streamAlert" class="alert d-none" role="alert">
+                </div>
+
+                <div id="emptyTimeline" class="text-center text-muted py-5">
+
+                    Waiting for order updates...
+                </div>
+
+                <div id="timeline" class="order-timeline">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2 class="h5">Update status</h2>
+
+                <p class="small text-muted">
+                    Choose a common status or enter your own.
+                </p>
+
+                <form id="statusForm">
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" name="OrderId" value="@Model.OrderId" />
+
+                    <div class="mb-3">
+                        <label for="statusSelect" class="form-label">
+                            Quick status
+                        </label>
+
+                        <select id="statusSelect" class="form-select">
+
+                            <option value="">
+                                Select a status
+                            </option>
+
+                            <option>Order accepted</option>
+                            <option>Processing</option>
+                            <option>Packed</option>
+                            <option>Shipped</option>
+                            <option>Out for delivery</option>
+                            <option>Delivered</option>
+                            <option>Cancelled</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="statusInput" class="form-label">
+                            Status
+                        </label>
+
+                        <input id="statusInput" name="Status" class="form-control" maxlength="200" required
+                               placeholder="Enter an order status" />
+                    </div>
+
+                    <button id="statusButton" type="submit" class="btn btn-primary w-100">
+
+                        Add status
+                    </button>
+                </form>
+
+                <div id="statusFeedback" class="small mt-3">
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h5">Customer note</h2>
+
+                <p class="small text-muted">
+                    Add delivery instructions or another note.
+                </p>
+
+                <form id="noteForm">
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" name="OrderId" value="@Model.OrderId" />
+
+                    <div class="mb-3">
+                        <textarea id="noteInput" name="Note" class="form-control" rows="3" maxlength="200" required
+                                  placeholder="Example: Call on arrival">
+                        </textarea>
+                    </div>
+
+                    <button id="noteButton" type="submit" class="btn btn-outline-primary w-100">
+
+                        Add note
+                    </button>
+                </form>
+
+                <div id="noteFeedback" class="small mt-3">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        (() => {
+            const orderId = @Model.OrderId;
+
+            const timeline =
+                document.getElementById("timeline");
+
+            const emptyTimeline =
+                document.getElementById("emptyTimeline");
+
+            const connectionBadge =
+                document.getElementById("connectionBadge");
+
+            const streamAlert =
+                document.getElementById("streamAlert");
+
+            const renderedStatusIds = new Set();
+
+            const eventSource =
+                new EventSource(`/orders/${orderId}/stream`);
+
+            eventSource.onopen = () => {
+                setConnectionState(
+                    "Live",
+                    "text-bg-success");
+
+                hideStreamAlert();
+            };
+
+            eventSource.addEventListener(
+                "order-status",
+                event => {
+                    const update = JSON.parse(event.data);
+
+                    if (renderedStatusIds.has(update.statusId)) {
+                        return;
+                    }
+
+                    renderedStatusIds.add(update.statusId);
+                    appendTimelineItem(update);
+                });
+
+            eventSource.onerror = () => {
+                setConnectionState(
+                    "Reconnecting",
+                    "text-bg-warning");
+
+                showStreamAlert(
+                    "The live connection was interrupted. " +
+                    "The browser will attempt to reconnect.",
+                    "alert-warning");
+            };
+
+            document
+                .getElementById("statusSelect")
+                .addEventListener("change", event => {
+                    if (event.target.value) {
+                        document.getElementById("statusInput").value =
+                            event.target.value;
+                    }
+                });
+
+            document
+                .getElementById("statusForm")
+                .addEventListener("submit", async event => {
+                    event.preventDefault();
+
+                    await submitForm({
+                        form: event.currentTarget,
+                        buttonId: "statusButton",
+                        feedbackId: "statusFeedback",
+                        url: `/orders/${orderId}/statuses`,
+                        successMessage: "Status saved. It will appear in the live timeline."
+                    });
+
+                    document.getElementById("statusInput").value = "";
+                    document.getElementById("statusSelect").value = "";
+                });
+
+            document
+                .getElementById("noteForm")
+                .addEventListener("submit", async event => {
+                    event.preventDefault();
+
+                    const succeeded = await submitForm({
+                        form: event.currentTarget,
+                        buttonId: "noteButton",
+                        feedbackId: "noteFeedback",
+                        url: `/orders/${orderId}/notes`,
+                        successMessage: "Note saved. It will appear in the live timeline."
+                    });
+
+                    if (succeeded) {
+                        document.getElementById("noteInput").value = "";
+                    }
+                });
+
+            function appendTimelineItem(update) {
+                emptyTimeline.classList.add("d-none");
+
+                const wrapper =
+                    document.createElement("div");
+
+                wrapper.className =
+                    update.isCustomerNote
+                        ? "timeline-item timeline-note"
+                        : "timeline-item timeline-status";
+
+                const marker =
+                    document.createElement("div");
+
+                marker.className = "timeline-marker";
+
+                const content =
+                    document.createElement("div");
+
+                content.className = "timeline-content";
+
+                const headingRow =
+                    document.createElement("div");
+
+                headingRow.className =
+                    "d-flex justify-content-between gap-3";
+
+                const status =
+                    document.createElement("strong");
+
+                status.textContent = update.status;
+
+                const type =
+                    document.createElement("span");
+
+                type.className =
+                    update.isCustomerNote
+                        ? "badge text-bg-info"
+                        : "badge text-bg-primary";
+
+                type.textContent =
+                    update.isCustomerNote
+                        ? "Customer note"
+                        : "Order status";
+
+                const timestamp =
+                    document.createElement("div");
+
+                timestamp.className =
+                    "small text-muted mt-1";
+
+                timestamp.textContent =
+                    formatTimestamp(update.timestamp);
+
+                headingRow.append(status, type);
+                content.append(headingRow, timestamp);
+                wrapper.append(marker, content);
+
+                timeline.appendChild(wrapper);
+            }
+
+            async function submitForm(options) {
+                const button =
+                    document.getElementById(options.buttonId);
+
+                const feedback =
+                    document.getElementById(options.feedbackId);
+
+                const originalText = button.textContent;
+
+                button.disabled = true;
+                button.textContent = "Saving...";
+
+                feedback.className = "small mt-3 text-muted";
+                feedback.textContent = "Submitting...";
+
+                try {
+                    const response = await fetch(options.url, {
+                        method: "POST",
+                        body: new FormData(options.form)
+                    });
+
+                    const payload =
+                        await response.json().catch(() => ({}));
+
+                    if (!response.ok) {
+                        throw new Error(
+                            payload.message ??
+                            "The request could not be completed.");
+                    }
+
+                    feedback.className =
+                        "small mt-3 text-success";
+
+                    feedback.textContent =
+                        options.successMessage;
+
+                    return true;
+                }
+                catch (error) {
+                    feedback.className =
+                        "small mt-3 text-danger";
+
+                    feedback.textContent =
+                        error.message;
+
+                    return false;
+                }
+                finally {
+                    button.disabled = false;
+                    button.textContent = originalText;
+                }
+            }
+
+            function formatTimestamp(value) {
+                const date = new Date(value);
+
+                return new Intl.DateTimeFormat(
+                    undefined,
+                    {
+                        dateStyle: "medium",
+                        timeStyle: "medium"
+                    })
+                    .format(date);
+            }
+
+            function setConnectionState(text, className) {
+                connectionBadge.className =
+                    `badge ${className}`;
+
+                connectionBadge.textContent = text;
+            }
+
+            function showStreamAlert(message, className) {
+                streamAlert.className =
+                    `alert ${className}`;
+
+                streamAlert.textContent = message;
+            }
+
+            function hideStreamAlert() {
+                streamAlert.className = "alert d-none";
+                streamAlert.textContent = "";
+            }
+
+            window.addEventListener("beforeunload", () => {
+                eventSource.close();
+            });
+        })();
+    </script>
+}

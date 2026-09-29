@@ -1,0 +1,62 @@
+// Interface Definition Language (IDL) - protocol buffers (protobuf)
+syntax = "proto3";
+
+option csharp_namespace = "OrderService.Protos";
+
+package OrderTracking;
+
+import "google/protobuf/empty.proto";
+
+service Order {
+  // Order management
+  rpc CreateOrder (CreateOrderRequest) returns (OrderReply);
+  rpc GetOrder (GetOrderRequest) returns (OrderReply);
+  rpc GetOrders (google.protobuf.Empty) returns (GetOrdersReply);
+
+  // Data-entry operations
+  rpc AddStatus (AddStatusRequest) returns (OrderStatusReply);
+  rpc SendNote (OrderNoteRequest) returns (OrderStatusReply);
+
+  // Live tracking
+  rpc TrackOrder (TrackOrderRequest) returns (stream OrderStatusReply);
+}
+
+message CreateOrderRequest {
+  string customerName = 1;
+}
+
+message GetOrderRequest {
+  int32 orderId = 1;
+}
+
+message TrackOrderRequest {
+  int32 orderId = 1;
+}
+
+message AddStatusRequest {
+  int32 orderId = 1;
+  string status = 2;
+}
+
+message OrderNoteRequest {
+  int32 orderId = 1;
+  string note = 2;
+}
+
+message OrderReply {
+  int32 orderId = 1;
+  string customerName = 2;
+  string orderDate = 3;
+}
+
+message GetOrdersReply {
+  repeated OrderReply orders = 1;
+}
+
+message OrderStatusReply {
+  int32 statusId = 1;
+  int32 orderId = 2;
+  string status = 3;
+  string timestamp = 4;
+  bool isCustomerNote = 5;
+}

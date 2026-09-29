@@ -1,0 +1,74 @@
+﻿@model IEnumerable<CityCentralLibrary.DAL.Models.MemberInfo>
+
+@{
+    ViewData["Title"] = "Search Member";
+}
+
+<h1>Search Member</h1>
+
+<form asp-action="SearchMember" method="post">
+
+    <div class="mb-3">
+        <label for="searchTerm" class="form-label">
+            Search Member
+        </label>
+
+        <input type="text"
+               id="searchTerm"
+               name="searchTerm"
+               class="form-control"
+               placeholder="Enter name, email or registration ID"
+               required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Search
+    </button>
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger mt-3">
+        @ViewBag.Message
+    </div>
+}
+
+@if (Model != null)
+{
+    if (!Model.Any())
+    {
+        <div class="alert alert-warning mt-3">
+            No members found.
+        </div>
+    }
+    else
+    {
+        <h4 class="mt-4">Search Results</h4>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Registration ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Membership Type</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var member in Model)
+                {
+                    <tr>
+                        <td>@member.RegistrationID</td>
+                        <td>@member.MemberName</td>
+                        <td>@member.EmailID</td>
+                        <td>@member.MembershipType</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+<div>
+    <a asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>

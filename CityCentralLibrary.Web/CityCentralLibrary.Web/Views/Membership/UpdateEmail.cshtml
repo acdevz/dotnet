@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Update Email";
+}
+
+<h1>Update Email</h1>
+<hr />
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-info">
+        @ViewBag.Message
+    </div>
+}
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateEmail" method="post">
+            <div class="mb-3">
+                <label for="registrationId" class="form-label">
+                    Registration ID
+                </label>
+
+                <input type="number"
+                       id="registrationId"
+                       name="registrationId"
+                       class="form-control"
+                       required />
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">
+                    Email
+                </label>
+
+                <input type="email"
+                       id="email"
+                       name="email"
+                       class="form-control"
+                       required />
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Update Email
+            </button>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Home"  asp-action="Index">Back to Home</a>
+</div>

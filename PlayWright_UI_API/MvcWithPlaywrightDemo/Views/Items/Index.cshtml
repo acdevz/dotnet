@@ -1,0 +1,10 @@
+@model IEnumerable<MvcWithPlaywrightDemo.Models.Item>
+
+<h2>Items List</h2>
+<ul id="items-list">
+    @foreach (var item in Model)
+    {
+        <li class="item-entry">@item.Id - @item.Name - @item.Price</li>
+    }
+</ul>
+

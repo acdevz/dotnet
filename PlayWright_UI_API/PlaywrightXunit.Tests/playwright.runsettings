@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <!-- 1. The RunConfiguration must be a top-level node for the .NET Test Runner to read it -->
+  <RunConfiguration>
+    <EnvironmentVariables>
+      <PLAYWRIGHT_CHROME_CHANNEL>chrome</PLAYWRIGHT_CHROME_CHANNEL>
+    </EnvironmentVariables>
+  </RunConfiguration>
+
+  <!-- 2. Playwright native runner settings -->
+  <Playwright>
+    <BrowserName>chromium</BrowserName>
+    <LaunchOptions>
+      <Headless>false</Headless>
+      <Channel>chrome</Channel> 
+    </LaunchOptions>
+  </Playwright>
+</RunSettings>

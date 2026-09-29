@@ -1,0 +1,35 @@
+using var doc = JsonDocument.Parse(json);
+JsonElement root = doc.RootElement;
+
+switch(root.ValueKind)
+{
+    case JsonValueKind.Object:
+    case JsonValueKind.Array:
+    case JsonValueKind.String:
+    case JsonValueKind.Number:
+    case JsonValueKind.True:
+    case JsonValueKind.False:
+    case JsonValueKind.Null:
+}
+
+# enumerating object properties
+foreach(var property in root.EnumerateObject())
+{
+    Console.WriteLine(property.Name);
+}
+
+# arrays
+JsonElement ratings = root.GetProperty("ratings");
+Assert.Equal(
+    JsonValueKind.Array,
+    ratings.ValueKind);
+
+# enumerating arrays
+foreach(var rating in ratings.EnumerateArray())
+{
+    int stars =
+        rating.GetProperty("stars")
+              .GetInt32();
+
+    Console.WriteLine(stars);
+}

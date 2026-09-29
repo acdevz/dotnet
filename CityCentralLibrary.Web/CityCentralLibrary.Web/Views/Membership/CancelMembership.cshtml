@@ -1,0 +1,51 @@
+@{
+    ViewData["Title"] = "Cancel Membership";
+}
+
+<h1>Cancel Membership</h1>
+<hr />
+
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-info">
+        @ViewBag.Message
+    </div>
+}
+
+<p>
+    Please enter the Registration ID of the membership
+    you want to cancel.
+</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CancelMembership" method="post">
+
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label for="registrationId" class="form-label">
+                    Registration ID
+                </label>
+
+                <input type="number"
+                        id="registrationId"
+                        name="registrationId"
+                        class="form-control"
+                        placeholder="Enter Registration ID"
+                        required
+                        min="1" />
+            </div>
+            <div>
+                <button type="submit" class="btn btn-danger">
+                    Cancel Membership
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Home"  asp-action="Index">Back to Home</a>
+</div>

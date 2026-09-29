@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CityCentralLibrary.DAL/CityCentralLibrary.DAL.csproj" />
+  <Project Path="CityCentralLibrary.Web/CityCentralLibrary.Web.csproj" DisplayName="CityCentralLibrary.WEB" />
+</Solution>

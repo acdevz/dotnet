@@ -1,0 +1,84 @@
+@model IReadOnlyList<OrderApp.Models.Orders.OrderListItemViewModel>
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="mb-1">Orders</h1>
+        <p class="text-muted mb-0">
+            Create orders and monitor their progress live.
+        </p>
+    </div>
+
+    <a asp-action="Create" class="btn btn-primary">
+        Create Order
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="card shadow-sm">
+        <div class="card-body text-center py-5">
+            <h2 class="h4">No orders yet</h2>
+
+            <p class="text-muted">
+                Create the first order through the application.
+            </p>
+
+            <a asp-action="Create" class="btn btn-primary">
+                Create First Order
+            </a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Order</th>
+                        <th>Customer</th>
+                        <th>Created</th>
+                        <th class="text-end">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        var createdDate = order.OrderDate
+                            .ToLocalTime()
+                            .ToString("dd MMM yyyy, hh:mm tt");
+
+                        <tr>
+                            <td>
+                                <strong>#@order.OrderId</strong>
+                            </td>
+
+                            <td>@order.CustomerName</td>
+
+                            <td>@createdDate</td>
+
+                            <td class="text-end">
+                                <a asp-action="Track" asp-route-id="@order.OrderId" class="btn btn-sm btn-outline-primary">
+                                    Open Tracker
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

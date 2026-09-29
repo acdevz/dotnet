@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="LifelineHospital.DAL/LifelineHospital.DAL.csproj" />
+  <Project Path="LifeLineHospital.WEB/LifeLineHospital.WEB.csproj" />
+</Solution>

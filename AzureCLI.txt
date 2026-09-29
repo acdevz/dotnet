@@ -1,0 +1,94 @@
+az login
+
+No     Subscription name      Subscription ID                       Tenant
+-----  ---------------------  ------------------------------------  --------
+[1] *  Techversant IXO infra  c313e45e-8246-4c70-b131-6541db426030  L&KM
+
+
+
+az webapp list 
+    --resource-group FDE_AC_RG `
+    --query "[].{Name:name, HostName:defaultHostName}" `
+    -o table
+
+Name      HostName
+--------  ---------------------------------------------------------
+AsciiArt  asciiart-c8a7h6aabdbkcmfm.southindia-01.azurewebsites.net
+
+
+
+
+---------------------------------------------------------------------------------------------------------------
+--------------------------------------- artifact-based deployment/ zip ------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+
+
+# publish 
+dotnet publish -c Release -o ./publish
+
+# compress/ zip
+cd publish
+zip -r ../app.zip .
+cd ..
+
+
+Compress-Archive -Path .\publish\* -DestinationPath .\app.zip -Force
+
+# deploy
+az webapp deploy `
+  --resource-group FDE_AC_RG `
+  --name AsciiArt `
+  --src-path ./app.zip `
+  --type zip
+
+{
+  "active": true,
+  "author": "N/A",
+  "author_email": "N/A",
+  "complete": true,
+  "deployer": "OneDeploy",
+  "end_time": "2026-09-29T08:02:39.1885497Z",
+  "id": "1735adefae8a41b8a5b48dad289b3f77",
+  "is_readonly": true,
+  "is_temp": false,
+  "last_success_end_time": "2026-09-29T08:02:39.1885497Z",
+  "log_url": "https://asciiart-c8a7h6aabdbkcmfm.scm.southindia-01.azurewebsites.net/api/deployments/latest/log",
+  "message": "OneDeploy",
+  "progress": "",
+  "provisioningState": "Succeeded",
+  "received_time": "2026-09-29T08:02:37.2041688Z",
+  "site_name": "AsciiArt",
+  "start_time": "2026-09-29T08:02:37.2666686Z",
+  "status": 4,
+  "status_text": "",
+  "url": "https://asciiart-c8a7h6aabdbkcmfm.scm.southindia-01.azurewebsites.net/api/deployments/latest"
+}
+
+# create resource on deployments
+az webapp up `
+  --resource-group FDE_AC_RG `
+  --name AsciiArt `
+  --runtime "DOTNETCORE:10.0"
+
+
+
+
+---------------------------------------------------------------------------------------------------------------
+--------------------------------------- source-based deployment/ git ------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+
+# setup user-scope deployment credential/basic authentication for azure webapp
+
+az webapp deployment user set `
+  --user-name fdeacwebdep `
+  --password ###
+
+az webapp deployment source config-local-git `
+  --name AsciiArt `
+  --resource-group FDE_AC_RG `
+  -o tsv
+
+# remote git url
+
+git remote add azure https://fdeacwebdep@asciiart-c8a7h6aabdbkcmfm.scm.southindia-01.azurewebsites.net/AsciiArt.git
+git push azure main:master

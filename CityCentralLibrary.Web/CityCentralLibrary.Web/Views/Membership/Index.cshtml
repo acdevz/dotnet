@@ -1,0 +1,56 @@
+@model IEnumerable<CityCentralLibrary.DAL.Models.MemberInfo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>All Members</h1>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MembershipType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.MemberName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.MembershipType)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.ContactNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.EmailID)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
